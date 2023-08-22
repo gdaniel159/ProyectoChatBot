@@ -4,7 +4,9 @@
 
     <div class="container d-flex justify-content-center align-items-center" style="height: 85vh">
 
-        <form action="" class="formLogin" method="POST">
+        <form action="{{ route('login') }}" class="formLogin" method="POST">
+
+            @csrf
 
             <h2 style="color: #fff">LOGIN</h2>
 
@@ -12,6 +14,9 @@
 
                 <label for="email" class="form-label">Correo</label>
                 <input type="email" id="email" name="email" required placeholder="Enter an email..." class="form-control">
+                @error('email')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
 
             </div>
 

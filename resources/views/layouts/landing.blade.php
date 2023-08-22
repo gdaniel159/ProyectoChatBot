@@ -16,7 +16,17 @@
     @include('layouts._partials.menu')
     <main>
         @yield('content')
+        @include('layouts._partials.chatbot')
     </main>
     @include('layouts._partials.footer')
+    @yield('script')
+    <script>
+        const toggleButton = document.querySelector('.toggle-button');
+        const chatbotContainer = document.querySelector('.chatbot-container');
+
+        toggleButton.addEventListener('click', () => {
+            chatbotContainer.classList.toggle('show-chatbot');
+        });
+    </script>
 </body>
 </html>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\TipoUsuario;
 use App\Models\Usuario;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class UsuarioController extends Controller
@@ -40,6 +41,31 @@ class UsuarioController extends Controller
         $user = Usuario::create($data); // Crea el usuario
 
         return redirect()->route('login_form'); // Redirige a la página de perfil
+    }
+
+    public function login(Request $request)
+    {
+
+        $credentials = $request->only('email','password');
+
+        if (Auth::guard('usuarios')->attempt($credentials)) {
+
+            return redirect()->intended('/blog');
+
+        } else {
+
+            return redirect()->route('login_form')->withErrors([
+                'email' => 'Las credenciales proporcionadas no son válidas.',
+            ]);
+
+        }
+
+    }
+
+    public function logout()
+    {
+        Auth::logout(); // Cierra la sesión del usuario
+        return redirect()->route('home'); // Redirige a la página de inicio u otra página
     }
 
 }

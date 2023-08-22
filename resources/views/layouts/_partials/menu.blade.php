@@ -35,13 +35,27 @@
                     </li>
                 </ul>
 
-                <form class="d-flex align-items-center acciones-page">
-                    <a class="nav-link" aria-current="page" href="{{route('login_form')}}" style="color:#fff; font-size:18px">Login</a>
-                    <a class="btn" href="{{route('register_form')}}">Registrase</a>
-                </form>
+                @if(Auth::check())
+                    <form class="d-flex align-items-center acciones-page" method="POST" action="{{ route('logout') }}" id="logout-form">
+
+                        @csrf
+                        <a id="logout-link" href="#" style="color:#fff; font-size:18px" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Cerrar Sesión</a>
+
+                    </form>
+
+                @else
+                    <form class="d-flex align-items-center acciones-page">
+
+                        <a class="nav-link" aria-current="page" href="{{ route('login_form') }}" style="color:#fff; font-size:18px">Login</a>
+                        <a class="btn" href="{{ route('register_form') }}">Registrarse</a>
+
+                    </form>
+                @endif
 
             </div>
+
         </div>
+
     </nav>
 
 </header>
