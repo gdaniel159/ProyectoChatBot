@@ -29,49 +29,47 @@
         const messageInput = document.getElementById('message_input');
         const responseContainer = document.getElementById('responseContainer');
         const chatMessages = document.getElementById('chat-messages');
-        
+        const botButtons = document.querySelectorAll('.bot-button');
+
         toggleButton.addEventListener('click', () => {
             chatbotContainer.classList.toggle('show-chatbot');
         });
 
+        botButtons.forEach(button => {
+            button.addEventListener('click', async (event) => {
+                const keyword = button.getAttribute('data-keyword');
+                await sendMessageToApi(keyword);
+            });
+        });
+
         sendButton.addEventListener('click', async () => {
-
             const userMessage = messageInput.value;
-            // console.log(userMessage);
-
+            await sendMessageToApi(userMessage);
+        });
+        
+        async function sendMessageToApi(message) {
             const jsonData = {
+                user_message: encodeURIComponent(message)
+            };
 
-                user_message : encodeURIComponent(userMessage)
-
-            }
-
-            try{
-
-                const response = await fetch('http://127.0.0.1:5000/api',{
-                    method : 'POST',
-                    headers : {
-                        'Content-Type' : 'application/json'
+            try {
+                const response = await fetch('http://127.0.0.1:5000/api', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
                     },
-                    body : JSON.stringify(jsonData)
+                    body: JSON.stringify(jsonData)
                 });
-
-                // const responseBody = await response.json();  // Aquí obtienes el cuerpo en formato JSON
-
-                // console.log(responseBody);
 
                 const responseData = await response.json();
                 const apiResponse = responseData.response;
 
-                addMessage(userMessage, 'user');
+                addMessage(message, 'user');
                 addMessage(apiResponse, 'bot');
-
             } catch (error) {
-
                 console.log('Error al enviar la solicitud: ', error);
-
             }
-
-        });
+        }
 
         function addMessage(message, sender) {
 

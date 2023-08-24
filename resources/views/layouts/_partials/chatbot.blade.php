@@ -16,6 +16,15 @@
 
             <div id="chat-messages" class="chat-messages"></div>
 
+            <div class="buttons">
+
+                <button class="bot-button" data-keyword="exotico">Animales Exóticos</button>
+                <button class="bot-button" data-keyword="extinto">Animales Extintos</button>
+                <button class="bot-button" data-keyword="salvaje">Animales Salvajes</button>
+                <button class="bot-button" data-keyword="conservacion">Animales en Peligro de Extinción</button>
+
+            </div>
+
             <div class="message-container">
 
                 <input type="text" id="message_input" name="message_input">
