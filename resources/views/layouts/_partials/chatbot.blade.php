@@ -14,10 +14,12 @@
             <p class="name">PetPalBot</p>
             <p class="downmessage"><small>Puedes aqui escoger una seria de opciones y te dare las respuestas correctas 😃</small></p>
 
+            <div id="chat-messages" class="chat-messages"></div>
+
             <div class="message-container">
 
                 <input type="text" id="message_input" name="message_input">
-                <a href="" class="enviar"><i class="fa-regular fa-paper-plane" style="color: #fff"></i></a>
+                <a href="javascript:void(0)" class="enviar" id="sendButton"><i class="fa-regular fa-paper-plane" style="color: #fff"></i></a>
 
             </div>
 

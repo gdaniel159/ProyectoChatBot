@@ -252,3 +252,38 @@ footer {
     text-decoration: none;
     font-size: 16px;
 }
+
+.img-caj {
+    border: 1px solid #ccc;
+    padding: 20px;
+}
+
+/* Estilos para los mensajes del chat */
+
+.message {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.user .message {
+    justify-content: flex-start;
+}
+
+.bot .message {
+    justify-content: flex-end;
+}
+
+.user .message p,
+.bot .message p {
+    background-color: #f0f0f0;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 0;
+    max-width: 70%;
+}
+
+.message-sender {
+    font-weight: bold;
+    margin-right: 8px;
+}

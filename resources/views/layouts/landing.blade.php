@@ -17,16 +17,80 @@
     <main>
         @yield('content')
         @include('layouts._partials.chatbot')
+        <div id="responseContainer"></div>
     </main>
     @include('layouts._partials.footer')
     @yield('script')
     <script>
+
         const toggleButton = document.querySelector('.toggle-button');
         const chatbotContainer = document.querySelector('.chatbot-container');
-
+        const sendButton = document.getElementById('sendButton');
+        const messageInput = document.getElementById('message_input');
+        const responseContainer = document.getElementById('responseContainer');
+        const chatMessages = document.getElementById('chat-messages');
+        
         toggleButton.addEventListener('click', () => {
             chatbotContainer.classList.toggle('show-chatbot');
         });
+
+        sendButton.addEventListener('click', async () => {
+
+            const userMessage = messageInput.value;
+            // console.log(userMessage);
+
+            const jsonData = {
+
+                user_message : encodeURIComponent(userMessage)
+
+            }
+
+            try{
+
+                const response = await fetch('http://127.0.0.1:5000/api',{
+                    method : 'POST',
+                    headers : {
+                        'Content-Type' : 'application/json'
+                    },
+                    body : JSON.stringify(jsonData)
+                });
+
+                // const responseBody = await response.json();  // Aquí obtienes el cuerpo en formato JSON
+
+                // console.log(responseBody);
+
+                const responseData = await response.json();
+                const apiResponse = responseData.response;
+
+                addMessage(userMessage, 'user');
+                addMessage(apiResponse, 'bot');
+
+            } catch (error) {
+
+                console.log('Error al enviar la solicitud: ', error);
+
+            }
+
+        });
+
+        function addMessage(message, sender) {
+
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${sender}`;
+            
+            const messageContent = document.createElement('p');
+            messageContent.textContent = message;
+
+            const senderSpan = document.createElement('span');
+            senderSpan.className = 'message-sender';
+            senderSpan.textContent = sender === 'user' ? 'Tú' : 'PetPalBot';
+            
+            messageDiv.appendChild(senderSpan);
+            messageDiv.appendChild(messageContent);
+            chatMessages.appendChild(messageDiv);
+
+        }
+
     </script>
 </body>
 </html>
